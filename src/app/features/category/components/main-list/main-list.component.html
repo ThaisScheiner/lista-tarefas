@@ -1,0 +1,10 @@
+<section class="container">
+  <span class="title">Categorias</span>
+
+  <ul class="list">
+    @for(category of categories(); track category.id){
+      <li class="list-category">{{ category.name }}</li>
+    }
+  </ul>
+
+</section>

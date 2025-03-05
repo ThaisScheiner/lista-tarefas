@@ -1,0 +1,23 @@
+/* Container principal */
+.container {
+  height: 100vh; /* h-screen */
+  display: flex; /* flex */
+  width: 100%; /* w-full */
+}
+
+/* Categoria (lado esquerdo) */
+.category {
+  width: 25%; /* w-1/4 */
+}
+
+/* Divisor vertical */
+.divider {
+  height: 100%; /* h-full */
+  opacity: 0.5; /* opacity-50 */
+  display: block; /* Para garantir que ocupe a altura correta */
+}
+
+/* Tarefas (lado direito) */
+.task {
+  width: 75%; /* w-3/4 */
+}

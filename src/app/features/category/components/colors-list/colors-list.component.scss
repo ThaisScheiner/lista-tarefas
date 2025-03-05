@@ -1,0 +1,56 @@
+.custom-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.custom-divider {
+  opacity: 0.5;
+  border: none;
+  height: 1px;
+  background-color: currentColor;
+}
+
+.color-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px; /* Reduz o espaçamento entre os botões */
+  max-width: 250px; /* Limita a largura total da lista */
+}
+
+
+
+.custom-color-list {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+  justify-content: center; /* Centraliza os itens horizontalmente */
+  align-items: center;
+  gap: 8px; /* Espaço entre os botões */
+  margin-top: 10px;
+  max-width: 300px; /* Defina uma largura máxima para evitar que os botões fiquem grandes demais */
+}
+
+.custom-category {
+  display: inline-flex; /* Mantém os botões lado a lado */
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px; /* Reduz o tamanho interno do botão */
+  border-radius: 12px; /* Mantém o arredondamento */
+  font-size: 14px; /* Diminui o tamanho do texto */
+  font-weight: 600;
+  color: white;
+  transition: opacity 0.3s ease;
+  min-width: auto; /* Remove o tamanho mínimo fixo */
+  max-width: 100px; /* Limita o tamanho do botão */
+  flex: 0 1 auto; /* Permite que os botões fiquem menores */
+  opacity: 0.8;
+}
+
+.custom-category:hover {
+  opacity: 1;
+  user-select: none; /* Nao permite selecionar o elemento*/
+}

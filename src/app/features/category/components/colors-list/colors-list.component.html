@@ -1,0 +1,19 @@
+  <section class="custom-section"> 
+    <!-- Divisor -->
+    <mat-divider class="custom-divider"></mat-divider>
+
+    <!-- Lista de cores -->
+    <div class="custom-color-list">
+      <div class="color-list-container">
+        @for(category of categories(); track category.id) {
+          <span 
+            class="custom-category"
+            [ngStyle]="{'background-color': getColor(category.color)}"
+          >
+            {{ category.name }}
+          </span>
+        }
+      </div>
+      
+    </div>
+  </section>
