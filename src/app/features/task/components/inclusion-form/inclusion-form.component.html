@@ -1,11 +1,11 @@
+<!-- botao categoria-->
+
 <div class="container">
   <!-- input e mat-select  -->
   <app-include-task-form class="form"></app-include-task-form>
 
   <!-- buttons  -->
   <div class="buttons">
-    <span class="circle {{
-      colorVariants[selectedCategoryId()]
-    }}" ></span>
-</div>
+     <span [ngClass]="colorVariants[selectedCategoryId] || 'bg-gray'" class="circle"></span>
+ </div>
 </div>

@@ -1,19 +1,13 @@
-  <section class="custom-section"> 
-    <!-- Divisor -->
-    <mat-divider class="custom-divider"></mat-divider>
+<!--lista de categorias botoes rodapé lado esquerdo-->
+<section class="custom-section">
 
-    <!-- Lista de cores -->
-    <div class="custom-color-list">
-      <div class="color-list-container">
-        @for(category of categories(); track category.id) {
-          <span 
-            class="custom-category 
-              {{ categoryBackgroundColors[category.color] }}"
-          >
-            {{ category.name }}
-          </span>
-        }
-      </div>
-      
-    </div>
-  </section>
+  <mat-divider class="custom-divider"></mat-divider>
+
+  <div class="color-list-container">
+    @for(category of categories(); track category.id) {
+    <span class="custom-category" [ngStyle]="{'background-color': getColor(category.color)}">
+      {{ category.name }}
+    </span>
+    }
+  </div>
+</section>

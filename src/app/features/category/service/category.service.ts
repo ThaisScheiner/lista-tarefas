@@ -7,7 +7,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
   providedIn: 'root'
 })
 export class CategoryService {
-
   private readonly apiUrl = environment.apiUrl;
 
   private readonly httpClient = inject(HttpClient);

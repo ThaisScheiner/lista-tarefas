@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { IncludeTaskFormComponent } from './include-task-form/include-task-form.component';
-import { CategoryService } from '../../../category/service/category.service';
 import { CommonModule } from '@angular/common';
-import { categoryIdBackgroundColors } from '../../../category/constants/category-colors';
+import { CategoryService } from '../../../category/service/category.service';
 
 @Component({
   selector: 'app-inclusion-form',
@@ -16,7 +15,21 @@ export class InclusionFormComponent {
 
   //public readonly taskService = inject(TaskService);
 
-  public readonly selectedCategoryId = this.categoryService.selectedCategoryId;
+  public get selectedCategoryId(): string {
+  const categoryId = this.categoryService.selectedCategoryId();
+  console.log('Categoria selecionada:', categoryId);
+  return categoryId || 'default';
+}
 
-  public colorVariants = categoryIdBackgroundColors;
+  
+  public colorVariants: { [key: string]: string } = {
+    'casa': 'bg-green',
+    'estudo': 'bg-orange',
+    'trabalho': 'bg-blue',
+    'pessoal': 'bg-red',
+    'saude': 'bg-purple'
+  };
+  
+  
+
 }

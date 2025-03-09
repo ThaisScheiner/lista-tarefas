@@ -21,9 +21,9 @@ import { CategoryService } from '../../../../category/service/category.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IncludeTaskFormComponent {
+    
+    private readonly categoryService = inject(CategoryService);
   
-  private readonly categoryService = inject(CategoryService);
-
-  public readonly categories = this.categoryService.categories;
-  
+    public readonly categories = this.categoryService.categories;
+    
 }

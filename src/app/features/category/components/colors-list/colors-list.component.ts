@@ -18,6 +18,15 @@ export class ColorsListComponent {
 
   public categories = this.categoryService.categories;
 
-  public categoryBackgroundColors = categoryBackgroundColors;
+  getColor(color: string): string {
+    const colorMap: { [key: string]: string } = {
+      red: "#dc2626",
+      blue: "#2563eb",
+      green: "#16a34a",
+      orange: "#EA580C",
+      purple: "#9333EA"
+    };
 
+    return colorMap[color] || "#000"; // Retorna preto se a cor não existir
+  }
 }
