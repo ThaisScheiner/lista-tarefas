@@ -1,0 +1,14 @@
+.form-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px; /* Equivalente a gap-2 (2 * 4px = 8px) */
+  user-select: none; /* Equivalente a select-none */
+}
+
+.full-width {
+  width: 100%; /* Equivalente a w-full */
+}
+
+.text-tertiary {
+  color: #a3a3a3; /* Cor semelhante ao Tailwind text-tertiary */
+}
