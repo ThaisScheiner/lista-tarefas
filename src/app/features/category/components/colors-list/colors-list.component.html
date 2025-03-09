@@ -7,8 +7,8 @@
       <div class="color-list-container">
         @for(category of categories(); track category.id) {
           <span 
-            class="custom-category"
-            [ngStyle]="{'background-color': getColor(category.color)}"
+            class="custom-category 
+              {{ categoryBackgroundColors[category.color] }}"
           >
             {{ category.name }}
           </span>

@@ -1,0 +1,43 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.5rem; /* gap-2 */
+  margin-top: 2rem; /* mt-8 */
+}
+
+.form {
+  grid-column: span 11; /* col-span-11 */
+}
+
+.buttons {
+  grid-column: span 1; /* col-span-1 */
+  display: flex; /* flex */
+  align-items: flex-start; /* items-start */
+  margin-top: 0.5rem /* 8px */;
+}
+
+.circle {
+  border-radius: 50%; /* rounded-full */
+  width: 2.5rem; /* w-10 */
+  height: 2.5rem; /* h-10 */
+}
+
+.bg-red {
+  background-color: #dc2626;
+}
+.bg-blue {
+  background-color: #2563eb;
+}
+.bg-green {
+  background-color: #16a34a;
+}
+.bg-orange {
+  background-color: #EA580C;
+}
+.bg-purple {
+  background-color: #9333EA;
+}
+
+.bg-gray {
+  background-color: #d1d5db; /* Cinza padrão */
+}
