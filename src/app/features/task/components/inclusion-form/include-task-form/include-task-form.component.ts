@@ -5,6 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CategoryService } from '../../../../category/service/category.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-include-task-form',
@@ -26,4 +27,9 @@ export class IncludeTaskFormComponent {
   
     public readonly categories = this.categoryService.categories;
     
+    public selectionChangeHandler(event: MatSelectChange): void{
+      const categoryId = event.value;
+
+      this.categoryService.selectedCategoryId.set(categoryId);
+    }
 }

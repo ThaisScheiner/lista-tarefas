@@ -9,7 +9,7 @@
 
   <mat-form-field>
     <mat-label>Categoria</mat-label>
-    <mat-select> 
+    <mat-select (selectionChange)="selectionChangeHandler($event)">
       @for (category of categories(); track category.id) {
         <mat-option value="{{ category.id }}">{{
           category.name

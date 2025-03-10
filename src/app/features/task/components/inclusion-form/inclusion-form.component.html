@@ -6,6 +6,6 @@
 
   <!-- buttons  -->
   <div class="buttons">
-     <span [ngClass]="colorVariants[selectedCategoryId] || 'bg-gray'" class="circle"></span>
+     <span class=" circle {{ colorVariants[selectedCategoryId()] }}"></span>
  </div>
 </div>
