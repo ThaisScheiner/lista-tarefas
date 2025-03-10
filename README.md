@@ -1,59 +1,26 @@
-# ListaTarefas
+# Todo List com CRUD Completo utilizando Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.8.
+Este projeto tem como objetivo criar uma aplicação de lista de tarefas (Todo List) utilizando o Angular 19, com **signals** para o gerenciamento de estado reativo e integração com um backend para persistência dos dados.
 
-## Development server
+## Funcionalidades
 
-To start a local development server, run:
+- **Criar Tarefa**: Permite adicionar uma nova tarefa à lista.
+- **Ler Tarefas**: Exibe todas as tarefas armazenadas.
+- **Atualizar Tarefa**: Permite editar o título ou o status da tarefa.
+- **Deletar Tarefa**: Remove uma tarefa da lista.
+  
+## Tecnologias Usadas
 
-```bash
-ng serve
-```
+- **Angular 19**: Framework para criação da aplicação web.
+- **Signals**: Para o gerenciamento de estado reativo.
+- **Backend**: Criei um arquivo em json contendo tasks e categories
+- Categories: São cinco pré definidas
+- Tasks: Serão criadas pelo usuário, utilizando o CRUD criado em Typescript e Angular
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Front-end: 
+Para rodar o frontend, execute o comando na pasta do projeto Angular:
+- ng serve
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Back-end:
+Para rodar o back-end, execute o comando na pasta do projeto Angular:  
+- npm run server
