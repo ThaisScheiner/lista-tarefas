@@ -1,5 +1,12 @@
 <!--mat-select categoria-->
-<form autocomplete="off" class="form-container" [formGroup]="newTaskForm">
+<form 
+  [ngClass]="{
+    'cursor-not-allowed animate-pulse': isIncludeTaskFormDisabled(),
+    'cursor-pointer': !isIncludeTaskFormDisabled(),
+  }"
+  autocomplete="off" 
+  class="form-container" 
+  [formGroup]="newTaskForm">
 
   <mat-form-field class="full-width">
     <mat-label>Tarefa</mat-label>
