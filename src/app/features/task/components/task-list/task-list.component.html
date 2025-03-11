@@ -1,0 +1,23 @@
+<div class="task-container">
+  @if (tasks$ | async) {
+    @if (numberOfTasks() > 0) {
+      @for (task of tasks(); track task.id) {
+        <div class="task-item">
+          <span>{{ task.title }}</span>
+          
+          <!-- <app-update-task /> -->
+         
+          <!-- <app-delete-task /> -->
+           
+        </div>
+      }
+    } @else {
+      <!-- Quando não houver tarefas -->
+      <app-no-tasks
+        alt ="Nenhuma tarefa adicionada"
+        imageUrl ="no_data.svg"
+        message ="Nenhuma tarefa adicionada 😔" 
+      />
+    }
+  }
+</div>
