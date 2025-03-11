@@ -1,5 +1,18 @@
 {
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "d98c",
+      "title": "Treinar",
+      "categoryId": "5",
+      "isCompleted": false
+    },
+    {
+      "id": "c3e8",
+      "title": "Fazer compras",
+      "categoryId": "1",
+      "isCompleted": false
+    }
+  ],
   "categories": [
     {
       "id": "1",

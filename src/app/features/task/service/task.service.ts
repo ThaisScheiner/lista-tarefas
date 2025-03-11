@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Task } from '../model/task.model';
 import { environment } from '../../../../environments/environment';
-import { Observable, take, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,8 @@ export class TaskService {
   }
 
   public createTask(task: Partial<Task>): Observable<Task>{
-    return this._httpClient.post<Task>(`${this._apiUrl}/tasks`, task);
+    return this._httpClient
+      .post<Task>(`${this._apiUrl}/tasks`, task)
   }
 
   public insertATasksInTheTasksList(newTask: Task): void{

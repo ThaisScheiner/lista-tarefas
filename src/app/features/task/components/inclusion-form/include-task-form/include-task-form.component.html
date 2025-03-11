@@ -1,15 +1,21 @@
 <!--mat-select categoria-->
-<form autocomplete="off" class="form-container">
+<form autocomplete="off" class="form-container" [formGroup]="newTaskForm">
 
   <mat-form-field class="full-width">
     <mat-label>Tarefa</mat-label>
-    <input matInput placeholder="Adicionar tarefa" />
+    <input 
+      formControlName="title" matInput 
+      placeholder="Adicionar tarefa"
+      (keyup.enter)="onEnterToAddTask()">
     <mat-hint class="text-tertiary">Aperte enter para adicionar</mat-hint>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Categoria</mat-label>
-    <mat-select (selectionChange)="selectionChangeHandler($event)">
+    <mat-select 
+      formControlName="categoryId" 
+      (selectionChange)="selectionChangeHandler($event)"
+      (keyup.enter)="onEnterToAddTask()">
       @for (category of categories(); track category.id) {
         <mat-option value="{{ category.id }}">{{
           category.name
