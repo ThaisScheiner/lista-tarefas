@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, DestroyRef, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, DestroyRef, computed, signal } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,70 +32,111 @@ import { SnackBarService } from '../../../../../shared/services/snack-bar.servic
 export class IncludeTaskFormComponent {
 
   private readonly categoryService = inject(CategoryService);
-
   private readonly taskService = inject(TaskService);
-
-  public readonly categories = this.categoryService.categories;
-
-  public readonly newTaskForm = createTaskForm();
-
-  //desinscreve do obsevable
+  private readonly snackBarService = inject(SnackBarService);
   private readonly destroy$ = inject(DestroyRef);
 
-  private readonly snackBarService = inject(SnackBarService);
+  public readonly categories = this.categoryService.categories;
+  public readonly newTaskForm = createTaskForm();
 
-  //toda vez que o estado do loading mudou, ira habilitar ou desabilitar o form
+  // Sinal para armazenar a pesquisa
+  public searchQuery = signal<string>('');
+
+  // Sinal para armazenar a tarefa que está sendo editada
+  public editingTaskId = signal<string | null>(null);
+
+  // Computed para controlar o estado do formulário
   public isIncludeTaskFormDisabled = computed(() => {
-    //se for true
     if (this.taskService.isLoadingTask()) {
       this.newTaskForm.disable();
-      return this.taskService.isLoadingTask();
+      return true;
     }
-
     this.newTaskForm.enable();
-    return this.taskService.isLoadingTask();
+    return false;
   });
 
   public selectionChangeHandler(event: MatSelectChange): void {
     const categoryId = event.value;
-
     this.categoryService.selectedCategoryId.set(categoryId);
   }
 
-  //inserção
-  public onEnterToAddTask(): void {
+  // Adiciona ou edita uma tarefa
+  public onEnterToAddOrEditTask(): void {
     if (this.newTaskForm.invalid) return;
 
     this.taskService.isLoadingTask.set(true);
 
-    const { title, categoryId } = this.newTaskForm.value;
+    const formValue = this.newTaskForm.value;
+    const title = formValue.title ?? '';
+    const categoryId = formValue.categoryId ?? '';
 
-    const newTask: Partial<Task> = {
-      title,
-      categoryId,
-      isCompleted: false,
-    };
+    if (this.editingTaskId()) {
+      // Atualizar Tarefa
+      const updatedTask: Task = {
+        id: this.editingTaskId()!,
+        title,
+        categoryId,
+        isCompleted: false
+      };
 
-    this.taskService.createTask(newTask)
+      this.taskService.updateTask(updatedTask)
+        .pipe(
+          finalize(() => {
+            this.taskService.isLoadingTask.set(false);
+            this.editingTaskId.set(null);
+          }),
+          takeUntilDestroyed(this.destroy$)
+        )
+        .subscribe({
+          next: () => this.snackBarConfigHandler('Tarefa atualizada'),
+          error: error => this.snackBarConfigHandler(error.message)
+        });
+
+    } else {
+      // Criar Nova Tarefa
+      const newTask: Partial<Task> = { title, categoryId, isCompleted: false };
+
+      this.taskService.createTask(newTask)
+        .pipe(
+          delay(4000),
+          finalize(() => this.taskService.isLoadingTask.set(false)),
+          takeUntilDestroyed(this.destroy$)
+        )
+        .subscribe({
+          next: task => this.taskService.insertATasksInTheTasksList(task),
+          error: error => this.snackBarConfigHandler(error.message),
+          complete: () => this.snackBarConfigHandler('Tarefa incluída')
+        });
+    }
+  }
+
+  // Editar uma tarefa
+  public editTask(task: Task): void {
+    this.editingTaskId.set(task.id);
+    this.newTaskForm.patchValue({ title: task.title, categoryId: task.categoryId });
+  }
+
+  // Deletar uma tarefa
+  public deleteTask(taskId: string): void {
+    this.taskService.deleteTask(taskId)
       .pipe(
-        delay(4000),
-        finalize(() => this.taskService.isLoadingTask.set(false)), //para desbloquear o form depois de add task
-        takeUntilDestroyed(this.destroy$))
+        takeUntilDestroyed(this.destroy$)
+      )
       .subscribe({
-        next: task => this.taskService.insertATasksInTheTasksList(task),
-        error: error => {
-          this.snackBarConfigHandler(error.message);
-        },
-        complete: () => this.snackBarConfigHandler('Tarefa incluída'),
+        next: () => this.snackBarConfigHandler('Tarefa deletada'),
+        error: error => this.snackBarConfigHandler(error.message)
       });
   }
 
+  // Manipular barra de notificações
   public snackBarConfigHandler(message: string): void {
-    this.snackBarService.showSnackBar(
-      message,
-      4000,
-      'end',
-      'top'
-    );
+    this.snackBarService.showSnackBar(message, 4000, 'end', 'top');
   }
+
+  // Filtro de tarefas baseado na pesquisa
+  public filteredTasks = computed(() => {
+    return this.taskService.tasks().filter(task =>
+      task.title.toLowerCase().includes(this.searchQuery().toLowerCase())
+    );
+  });
 }

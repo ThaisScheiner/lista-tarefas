@@ -1,34 +1,46 @@
-<!--mat-select categoria-->
-<form 
-  [ngClass]="{
-    'cursor-not-allowed animate-pulse': isIncludeTaskFormDisabled(),
-    'cursor-pointer': !isIncludeTaskFormDisabled(),
-  }"
-  autocomplete="off" 
-  class="form-container" 
-  [formGroup]="newTaskForm">
+<form [ngClass]="{ 'cursor-not-allowed animate-pulse': isIncludeTaskFormDisabled(), 'cursor-pointer': !isIncludeTaskFormDisabled() }"
+      autocomplete="off"
+      class="form-container"
+      [formGroup]="newTaskForm">
 
   <mat-form-field class="full-width">
     <mat-label>Tarefa</mat-label>
-    <input 
-      formControlName="title" matInput 
-      placeholder="Adicionar tarefa"
-      (keyup.enter)="onEnterToAddTask()">
-    <mat-hint class="text-tertiary">Aperte enter para adicionar</mat-hint>
+    <input formControlName="title" matInput placeholder="Adicionar ou editar tarefa"
+           (keyup.enter)="onEnterToAddOrEditTask()">
+    <mat-hint class="text-tertiary">Aperte Enter para confirmar</mat-hint>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Categoria</mat-label>
-    <mat-select 
-      formControlName="categoryId" 
-      (selectionChange)="selectionChangeHandler($event)"
-      (keyup.enter)="onEnterToAddTask()">
+    <mat-select formControlName="categoryId" (selectionChange)="selectionChangeHandler($event)">
       @for (category of categories(); track category.id) {
-        <mat-option value="{{ category.id }}">{{
-          category.name
-        }}</mat-option>
+        <mat-option [value]="category.id">{{ category.name }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
+
 </form>
+
+<!-- Campo de pesquisa -->
+<mat-form-field class="full-width">
+  <mat-label>Pesquisar</mat-label>
+  <input matInput placeholder="Buscar tarefas" [(ngModel)]="searchQuery">
+</mat-form-field>
+
+<!-- Lista de tarefas -->
+<ul class="task-list">
+  @for (task of filteredTasks(); track task.id) {
+    <li class="task-item">
+      <span class="task-title">{{ task.title }}</span>
+      <div class="actions">
+        <button mat-icon-button color="primary" (click)="editTask(task)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </li>
+  }
+</ul>
 

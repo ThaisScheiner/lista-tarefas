@@ -1,14 +1,37 @@
 .form-container {
   display: flex;
   flex-direction: row;
-  gap: 8px; /* Equivalente a gap-2 (2 * 4px = 8px) */
-  user-select: none; /* Equivalente a select-none */
+  gap: 8px;
+  user-select: none;
 }
 
 .full-width {
-  width: 100%; /* Equivalente a w-full */
+  width: 100%;
 }
 
 .text-tertiary {
-  color: #a3a3a3; /* Cor semelhante ao Tailwind text-tertiary */
+  color: #a3a3a3;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.task-title {
+  flex-grow: 1; 
+}
+
+.actions {
+  display: flex;
+  gap: 8px; 
 }
