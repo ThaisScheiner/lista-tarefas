@@ -28,15 +28,4 @@ export class TaskListComponent {
 
 private readonly taskService = inject(TaskService);
 
-
-  // Sinal para armazenar a pesquisa
-  public searchQuery = signal<string>('');
-  
-
-  // Filtro de tarefas baseado na pesquisa
-    public filteredTasks = computed(() => {
-      return this.taskService.tasks().filter(task =>
-        task.title.toLowerCase().includes(this.searchQuery().toLowerCase())
-      );
-    });
 }

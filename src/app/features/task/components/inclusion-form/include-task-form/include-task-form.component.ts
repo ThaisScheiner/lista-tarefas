@@ -1,11 +1,10 @@
 import { Component, ChangeDetectionStrategy, inject, DestroyRef, computed, signal } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectModule, MatSelectChange } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryService } from '../../../../category/service/category.service';
-import { MatSelectChange } from '@angular/material/select';
 import { createTaskForm } from '../../../constants/create-task-form';
 import { Task } from '../../../model/task.model';
 import { TaskService } from '../../../service/task.service';
