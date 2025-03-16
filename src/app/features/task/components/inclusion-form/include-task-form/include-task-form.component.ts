@@ -63,13 +63,13 @@ export class IncludeTaskFormComponent {
   // Adiciona ou edita uma tarefa
   public onEnterToAddOrEditTask(): void {
     if (this.newTaskForm.invalid) return;
-
+  
     this.taskService.isLoadingTask.set(true);
-
+  
     const formValue = this.newTaskForm.value;
     const title = formValue.title ?? '';
     const categoryId = formValue.categoryId ?? '';
-
+  
     if (this.editingTaskId()) {
       // Atualizar Tarefa
       const updatedTask: Task = {
@@ -78,24 +78,30 @@ export class IncludeTaskFormComponent {
         categoryId,
         isCompleted: false
       };
-
+  
       this.taskService.updateTask(updatedTask)
         .pipe(
           finalize(() => {
             this.taskService.isLoadingTask.set(false);
             this.editingTaskId.set(null);
+            this.newTaskForm.reset();
           }),
           takeUntilDestroyed(this.destroy$)
         )
         .subscribe({
-          next: () => this.snackBarConfigHandler('Tarefa atualizada'),
+          next: () => {
+            this.taskService.tasks.update(tasks =>
+              tasks.map(task => (task.id === updatedTask.id ? updatedTask : task))
+            );
+            this.snackBarConfigHandler('Tarefa atualizada');
+          },
           error: error => this.snackBarConfigHandler(error.message)
         });
-
+  
     } else {
       // Criar Nova Tarefa
       const newTask: Partial<Task> = { title, categoryId, isCompleted: false };
-
+  
       this.taskService.createTask(newTask)
         .pipe(
           delay(4000),
@@ -103,12 +109,17 @@ export class IncludeTaskFormComponent {
           takeUntilDestroyed(this.destroy$)
         )
         .subscribe({
-          next: task => this.taskService.insertATasksInTheTasksList(task),
+          next: task => {
+            // Adiciona a nova tarefa à lista de tarefas
+            this.taskService.tasks.update(tasks => [...tasks, task]);
+            this.newTaskForm.reset();
+          },
           error: error => this.snackBarConfigHandler(error.message),
           complete: () => this.snackBarConfigHandler('Tarefa incluída')
         });
     }
   }
+
 
   // Editar uma tarefa
   public editTask(task: Task): void {
@@ -123,7 +134,10 @@ export class IncludeTaskFormComponent {
         takeUntilDestroyed(this.destroy$)
       )
       .subscribe({
-        next: () => this.snackBarConfigHandler('Tarefa deletada'),
+        next: () => {
+          this.taskService.tasks.update(tasks => tasks.filter(task => task.id !== taskId));
+          this.snackBarConfigHandler('Tarefa deletada');
+        },
         error: error => this.snackBarConfigHandler(error.message)
       });
   }
