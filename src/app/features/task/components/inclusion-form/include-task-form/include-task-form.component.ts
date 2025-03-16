@@ -12,6 +12,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { delay, finalize } from 'rxjs/operators';
 import { NgClass } from '@angular/common';
 import { SnackBarService } from '../../../../../shared/services/snack-bar.service';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-include-task-form',
@@ -20,6 +22,7 @@ import { SnackBarService } from '../../../../../shared/services/snack-bar.servic
     MatSelectModule,
     MatIconModule,
     MatInputModule,
+    MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
     NgClass
@@ -62,13 +65,13 @@ export class IncludeTaskFormComponent {
   // Adiciona ou edita uma tarefa
   public onEnterToAddOrEditTask(): void {
     if (this.newTaskForm.invalid) return;
-  
+
     this.taskService.isLoadingTask.set(true);
-  
+
     const formValue = this.newTaskForm.value;
     const title = formValue.title ?? '';
     const categoryId = formValue.categoryId ?? '';
-  
+
     if (this.editingTaskId()) {
       // Atualizar Tarefa
       const updatedTask: Task = {
@@ -77,7 +80,7 @@ export class IncludeTaskFormComponent {
         categoryId,
         isCompleted: false
       };
-  
+
       this.taskService.updateTask(updatedTask)
         .pipe(
           finalize(() => {
@@ -96,11 +99,11 @@ export class IncludeTaskFormComponent {
           },
           error: error => this.snackBarConfigHandler(error.message)
         });
-  
+
     } else {
       // Criar Nova Tarefa
       const newTask: Partial<Task> = { title, categoryId, isCompleted: false };
-  
+
       this.taskService.createTask(newTask)
         .pipe(
           delay(4000),
