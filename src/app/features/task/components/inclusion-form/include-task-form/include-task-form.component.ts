@@ -127,7 +127,11 @@ export class IncludeTaskFormComponent {
   public editTask(task: Task): void {
     this.editingTaskId.set(task.id);
     this.newTaskForm.patchValue({ title: task.title, categoryId: task.categoryId });
+
+    // Atualiza a cor do botao categoria qdo seleciona a edição
+    this.categoryService.selectedCategoryId.set(task.categoryId);
   }
+
 
   // Deletar uma tarefa
   public deleteTask(taskId: string): void {
@@ -144,6 +148,25 @@ export class IncludeTaskFormComponent {
       });
   }
 
+  public toggleTaskCompletion(task: Task): void {
+    const updatedTask = { ...task, isCompleted: !task.isCompleted };
+
+    this.taskService.updateTask(updatedTask)
+      .pipe(takeUntilDestroyed(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.taskService.tasks.update(tasks =>
+            tasks.map(t => (t.id === updatedTask.id ? updatedTask : t))
+          );
+          this.snackBarConfigHandler(
+            updatedTask.isCompleted ? 'Tarefa concluída!' : 'Tarefa marcada como pendente!'
+          );
+        },
+        error: error => this.snackBarConfigHandler(error.message)
+      });
+  }
+
+
   // Manipular barra de notificações
   public snackBarConfigHandler(message: string): void {
     this.snackBarService.showSnackBar(message, 4000, 'end', 'top');
@@ -155,4 +178,10 @@ export class IncludeTaskFormComponent {
       task.title.toLowerCase().includes(this.searchQuery().toLowerCase())
     );
   });
+
+  //limpa o campo tarefa ao clicar no campo pesquisar
+  public clearTaskField(): void {
+    this.newTaskForm.patchValue({ title: '' });
+  }
+
 }

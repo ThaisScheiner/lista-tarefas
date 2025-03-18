@@ -5,7 +5,7 @@
 
   <mat-form-field class="full-width">
     <mat-label>Tarefa</mat-label>
-    <input formControlName="title" matInput placeholder="Adicionar ou editar tarefa"
+    <input formControlName="title" matInput placeholder="Adicionar tarefa"
            (keyup.enter)="onEnterToAddOrEditTask()">
     <mat-hint class="text-tertiary">Aperte Enter para confirmar</mat-hint>
   </mat-form-field>
@@ -24,18 +24,31 @@
 <!-- Campo de pesquisa -->
 <mat-form-field class="full-width">
   <mat-label>Pesquisar</mat-label>
-  <input matInput placeholder="Buscar tarefas" [(ngModel)]="searchQuery">
+  <input matInput placeholder="Buscar tarefas" [(ngModel)]="searchQuery" (click)="clearTaskField()">
 </mat-form-field>
+
 
 <!-- Lista de tarefas -->
 <ul class="task-list">
   @for (task of filteredTasks(); track task.id) {
     <li class="task-item">
-      <span class="task-title">{{ task.title }}</span>
+      <!-- Adicionando ngClass para riscar a tarefa como concluída -->
+      <span class="task-title" [ngClass]="{ 'completed': task.isCompleted }">
+        {{ task.title }}
+      </span>
+
       <div class="actions">
+        <!-- Botão de Concluir -->
+        <button mat-icon-button color="success" (click)="toggleTaskCompletion(task)">
+          <mat-icon>{{ task.isCompleted ? 'undo' : 'check' }}</mat-icon>
+        </button>
+
+        <!-- Botão de Editar -->
         <button mat-icon-button color="primary" (click)="editTask(task)">
           <mat-icon>edit</mat-icon>
         </button>
+
+        <!-- Botão de Deletar -->
         <button mat-icon-button color="secondary" (click)="deleteTask(task.id)">
           <mat-icon>delete</mat-icon>
         </button>
@@ -43,4 +56,5 @@
     </li>
   }
 </ul>
+
 

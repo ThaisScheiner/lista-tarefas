@@ -1,27 +1,21 @@
 {
   "tasks": [
     {
-      "id": "4151",
-      "title": "daily de manha",
+      "id": "37c3",
+      "title": "daily às 10h",
       "categoryId": "3",
       "isCompleted": false
     },
     {
-      "id": "d986",
-      "title": "varrer",
+      "id": "77d4",
+      "title": "varrer quintal",
       "categoryId": "1",
       "isCompleted": false
     },
     {
-      "id": "cc8d",
-      "title": "correr",
-      "categoryId": "5",
-      "isCompleted": false
-    },
-    {
-      "id": "dc90",
-      "title": "run",
-      "categoryId": "5",
+      "id": "4525",
+      "title": "ir ao mercado",
+      "categoryId": "4",
       "isCompleted": false
     }
   ],

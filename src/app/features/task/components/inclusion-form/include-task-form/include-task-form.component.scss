@@ -22,16 +22,21 @@
 .task-item {
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
   padding: 8px;
   border-bottom: 1px solid #ddd;
 }
 
 .task-title {
-  flex-grow: 1; 
+  flex-grow: 1;
 }
 
 .actions {
   display: flex;
-  gap: 8px; 
+  gap: 8px;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
 }
